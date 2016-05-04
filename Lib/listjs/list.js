@@ -23,7 +23,7 @@ var list = {
             tr = $("<tr />").attr("field", field);
             tr.append('  <td type="name" class="muted" style="width:150px;">'+list.fields[field].title+'</td>');
             tr.append('  <td type="value">'+(list.fieldtypes[list.fields[field].type].draw(list.data[field])||'N/A')+'</td>');
-            tr.append('  <td type="edit" action="edit"><i class="icon-pencil" style="display:none"></i></td>');
+            tr.append('  <td type="edit" action="edit"><i class="glyphicon glyphicon-pencil" style="display:none"></i></td>');
             table.append(tr);
         }
         $(list.element).html(table);
@@ -42,7 +42,7 @@ var list = {
             {
               list.data[field] = list.fieldtypes[list.fields[field].type].save(field);
               $(list.element+" tr[field="+field+"] td[type=value]").html(list.fieldtypes[list.fields[field].type].draw(list.data[field]));
-              $(this).html("<i class='icon-pencil' style='display:none'></i>").attr('action','edit');
+              $(this).html("<i class='glyphicon glyphicon-pencil' style='display:none'></i>").attr('action','edit');
               $(list.element).trigger("onSave",[]);
             }
         });
@@ -63,7 +63,7 @@ var list = {
         'text':
         {
           'draw':function(value) { return value; },
-          'edit':function(field,value) { return "<input type='text' value='"+(value||'')+"' / >"; },
+          'edit':function(field,value) { return "<input class='form-control input-sm' type='text' value='"+(value||'')+"' / >"; },
           'save':function(field) { return $(list.element+' tr[field='+field+'] td[type=value] input').val();}
         },
 
@@ -136,7 +136,7 @@ var list = {
         'gravatar':
         {
           'draw':function(value) { return "<img style='border: 1px solid #ccc; padding:2px;' src='//www.gravatar.com/avatar/"+CryptoJS.MD5(value)+"'/ >" },
-          'edit':function(field,value) { return "<input type='text' value='"+value+"' / >" },
+          'edit':function(field,value) { return "<input class='form-control input-sm' type='text' value='"+value+"' / >" },
           'save':function(field) { return $(list.element+' tr[field='+field+'] td[type=value] input').val();}
         }
     }

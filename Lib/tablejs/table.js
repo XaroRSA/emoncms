@@ -78,10 +78,10 @@ var table = {
       var visible = '';
       htmlg = "";
       if (group_num>1) {
-        var symbol ='<i class="MINMAX icon-minus-sign" group="'+group+'" style="cursor:pointer"></i>'; 
+        var symbol ='<i class="MINMAX glyphicon glyphicon-minus-sign" group="'+group+'" style="cursor:pointer"></i>'; 
         if (table.groupshow[group]==undefined) table.groupshow[group]=false; // default is collapsed
-        if (table.groupshow[group]==false) {symbol = '<i class="MINMAX icon-plus-sign" group="'+group+'" style="cursor:pointer"></i>'; visible = "display:none";}
-        htmlg += "<tr><th colspan='3'>"+symbol+" <a class='MINMAX' group='"+group+"' style='cursor:pointer'>"+table.groupprefix+group+"</a></th>";
+        if (table.groupshow[group]==false) {symbol = '<i class="MINMAX glyphicon glyphicon-plus-sign" group="'+group+'" style="cursor:pointer"></i>'; visible = "display:none";}
+        htmlg += "<tr><th colspan='5'>"+symbol+" <a class='MINMAX' group='"+group+"' style='cursor:pointer'>"+table.groupprefix+group+"</a></th>";
         var countFields = 0; for (field in table.fields) countFields++; // Calculate amount of padding required
         if (table.groupfields == undefined) {
           for (i=2; i<countFields-1; i++) htmlg += "<th></th>"; // Add th padding
@@ -214,8 +214,8 @@ var table = {
         if (fields_to_update[table.groupby]!=undefined) table.draw();
       }
 
-      if (mode == 'edit') {$(this).attr('mode','save'); $(this).html("<i class='icon-ok' style='cursor:pointer'></i>");}
-      if (mode == 'save') {$(this).attr('mode','edit'); $(this).html("<i class='icon-pencil' style='cursor:pointer'></i>"); $(table.element).trigger("onResume");}
+      if (mode == 'edit') {$(this).attr('mode','save'); $(this).html("<i class='glyphicon glyphicon-ok' style='cursor:pointer'></i>");}
+      if (mode == 'save') {$(this).attr('mode','edit'); $(this).html("<i class='glyphicon glyphicon-pencil' style='cursor:pointer'></i>"); $(table.element).trigger("onResume");}
     });
 
     // Check if events have been defined for field types.
@@ -232,13 +232,13 @@ var table = {
 
     'text': {
       'draw': function (row,field) { return table.data[row][field] },
-      'edit': function (row,field) { return "<input type='text' value='"+table.data[row][field]+"' / >" },
+      'edit': function (row,field) { return "<input class='form-control input-sm' type='text' value='"+table.data[row][field]+"' / >" },
       'save': function (row,field) { return $("[row="+row+"][field="+field+"] input").val() },
     },
 
     'textlink': {
       'draw': function (row,field) { return "<a href='"+table.fields[field].link+table.data[row]['id']+"' >"+table.data[row][field]+"</a>" },
-      'edit': function (row,field) { return "<input type='text' style='width:120px' value='"+table.data[row][field]+"' / >" },
+      'edit': function (row,field) { return "<input class='form-control input-sm' type='text' style='width:120px' value='"+table.data[row][field]+"' / >" },
       'save': function (row,field) { return $("[row="+row+"][field="+field+"] input").val() },
     },
 
@@ -267,11 +267,11 @@ var table = {
     },
 
     'delete': {
-      'draw': function (row,field) { return table.data[row]['#READ_ONLY#'] ? "" : "<a type='delete' row='"+row+"' uid='"+table.data[row]['id']+"' ><i class='icon-trash' style='cursor:pointer'></i></a>"; }
+      'draw': function (row,field) { return table.data[row]['#READ_ONLY#'] ? "" : "<a type='delete' row='"+row+"' uid='"+table.data[row]['id']+"' ><i class='glyphicon glyphicon-trash' style='cursor:pointer'></i></a>"; }
     },
 
     'edit': {
-      'draw': function (row,field) { return table.data[row]['#READ_ONLY#'] ? "" : "<a type='edit' row='"+row+"' uid='"+table.data[row]['id']+"' mode='edit'><i class='icon-pencil' style='cursor:pointer'></i></a>"; },
+      'draw': function (row,field) { return table.data[row]['#READ_ONLY#'] ? "" : "<a type='edit' row='"+row+"' uid='"+table.data[row]['id']+"' mode='edit'><i class='glyphicon glyphicon-pencil' style='cursor:pointer'></i></a>"; },
     },
 
     'blank': {

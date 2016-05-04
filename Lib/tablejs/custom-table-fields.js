@@ -48,7 +48,7 @@ var customtablefields = {
 
   'iconlink': {
     'draw': function (row,field) { 
-      var icon = 'icon-eye-open'; if (table.fields[field].icon) icon = table.fields[field].icon;
+      var icon = 'glyphicon glyphicon-eye-open'; if (table.fields[field].icon) icon = table.fields[field].icon;
       return "<a href='"+table.fields[field].link+table.data[row]['id']+"' ><i class='"+icon+"' ></i></a>" 
     }
   },
@@ -62,7 +62,7 @@ var customtablefields = {
 
   'hinteditable': {
     'draw': function (row,field) { return "…";},
-    'edit': function (row,field) { return "<input type='text' value='"+table.data[row][field]+"' / >" },
+    'edit': function (row,field) { return "<input class='form-control input-sm' type='text' value='"+table.data[row][field]+"' / >" },
     'save': function (row,field) { return $("[row="+row+"][field="+field+"] input").val() }
   },
 
