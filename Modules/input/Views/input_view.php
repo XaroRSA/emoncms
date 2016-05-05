@@ -25,10 +25,17 @@
 </style>
 
 <div>
-    <div id="apihelphead" style="float:right;"><a href="api"><?php echo _('Input API Help'); ?></a></div>
-    <div id="localheading"><h2><?php echo _('Inputs'); ?></h2></div>
+    <div id="apihelphead" style="float:right;">
+        <a href="api"><?php echo _('Input API Help'); ?></a>
+    </div>
 
-    <div id="table"><div align='center'>loading...</div></div>
+    <div id="localheading">
+        <h2><?php echo _('Inputs'); ?></h2>
+    </div>
+
+    <div id="table">
+        <div align='center'>loading...</div>
+    </div>
 
     <div id="noinputs" class="alert alert-block hide">
             <h4 class="alert-heading"><?php echo _('No inputs created'); ?></h4>
@@ -41,13 +48,12 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel"><?php echo _('Delete Input'); ?></h3>
     </div>
+
     <div class="modal-body">
-        <p><?php echo _('Deleting an Input will lose it name and configured Processlist.<br>A new blank input is automatic created by API data post if it does not already exists.'); ?>
-        </p>
-        <p>
-           <?php echo _('Are you sure you want to delete?'); ?>
-        </p>
+                <p><?php echo _('Deleting an Input will lose it name and configured Processlist.<br>A new blank input is automatic created by API data post if it does not already exists.'); ?></p>
+                <p><?php echo _('Are you sure you want to delete?'); ?></p>
     </div>
+
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo _('Cancel'); ?></button>
         <button id="confirmdelete" class="btn btn-primary"><?php echo _('Delete'); ?></button>
@@ -71,7 +77,7 @@
     'dummy-7':{'title':'', 'type':"blank"},
     'dummy-8':{'title':'', 'type':"blank"},
     'dummy-9':{'title':'', 'type':"blank"}
-  }
+    };
 
   table.deletedata = false;
   table.fields = {
@@ -154,7 +160,7 @@
   // Process list UI js
   processlist_ui.init(0); // Set input context
 
-  $("#table").on('click', '.icon-wrench', function() {
+    $("#table").on('click', '.glyphicon-wrench', function() {
     var i = table.data[$(this).attr('row')];
     console.log(i);
     var contextid = i.id; // Current Input ID
