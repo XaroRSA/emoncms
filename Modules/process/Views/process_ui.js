@@ -32,10 +32,10 @@ var processlist_ui =
         // Move process up or down
         out += '<td>';
         if (i > 0) {
-          out += '<a class="move-process" title="Move up" processid='+i+' moveby=-1 ><i class="icon-arrow-up"></i></a>';
+          out += '<a class="move-process" title="Move up" processid='+i+' moveby=-1 ><i class="glyphicon glyphicon-arrow-up"></i></a>';
         }
         if (i < this.contextprocesslist.length-1) {
-          out += '<a class="move-process" title="Move up" processid='+i+' moveby=1 ><i class="icon-arrow-down"></i></a>';
+          out += '<a class="move-process" title="Move up" processid='+i+' moveby=1 ><i class="glyphicon glyphicon-arrow-down"></i></a>';
         }
         out += '</td>';
 
@@ -54,7 +54,7 @@ var processlist_ui =
             switch(this.processlist[processkey][1]) {
               case 0: // VALUE
                 arg += "<span class='label label-info' title='Value'>";
-                arg += "<i class='icon-edit icon-white'></i> ";
+                arg += "<i class='glyphicon glyphicon-edit icon-white'></i> ";
                 arg += this.contextprocesslist[z][1];
                 arg += "</span>";
                 break;
@@ -63,7 +63,7 @@ var processlist_ui =
                 var inpid = this.contextprocesslist[z][1];
                 if (this.inputlist[inpid]!=undefined) {
                 arg += "<span class='label label-info' title='Input "+inpid+"'>";
-                arg += "<i class='icon-signal icon-white'></i> ";
+                arg += "<i class='glyphicon glyphicon-signal icon-white'></i> ";
                 arg += "Node "+this.inputlist[inpid].nodeid+":"+this.inputlist[inpid].name;
                 if (this.inputlist[inpid].description!="") arg += " "+this.inputlist[inpid].description;
                 arg += "</span>";
@@ -77,7 +77,7 @@ var processlist_ui =
                 var feedid = this.contextprocesslist[z][1];
                 if (this.feedlist[feedid]!=undefined) {
                 arg += "<a class='label label-info' title='Feed "+feedid+"' href='"+path+"vis/auto?feedid="+feedid+"'>";
-                arg += "<i class='icon-list-alt icon-white'></i> ";
+                arg += "<i class='glyphicon glyphicon-list-alt icon-white'></i> ";
                 if (this.feedlist[feedid].tag) arg += this.feedlist[feedid].tag+": ";
                 arg += this.feedlist[feedid].name;
                 arg += "</a>";
@@ -89,7 +89,7 @@ var processlist_ui =
 
               case 4: // TEXT
                 arg += "<span class='label label-info' title='Text'>";
-                arg += "<i class='icon-edit icon-white'></i> ";
+                arg += "<i class='glyphicon glyphicon-edit icon-white'></i> ";
                 arg += this.contextprocesslist[z][1];
                 arg += "</span>";
                 break;
@@ -98,7 +98,7 @@ var processlist_ui =
                 var schid = this.contextprocesslist[z][1];
                 if (this.schedulelist[schid]!=undefined) {
                 arg += "<span class='label label-info' title='Schedule "+schid+"' >";
-                arg += "<i class='icon-time icon-white'></i> ";
+                arg += "<i class='glyphicon glyphicon-time icon-white'></i> ";
                 arg += this.schedulelist[schid].name;
                 arg += "</span>";
                 } else {
@@ -116,8 +116,8 @@ var processlist_ui =
         out += "<td>"+(i+1)+"</td><td>"+processname+"</td><td>"+arg+"</td><td>"+lastvalue+"</td>";
      
         // Delete process button (icon)
-        out += '<td><a class="edit-process" title="Edit" processid='+i+'><i class="icon-pencil" style="cursor:pointer"></i></a></td>';
-        out += '<td><a class="delete-process" title="Delete" processid='+i+'><i class="icon-trash" style="cursor:pointer"></i></a></td>';
+        out += '<td><a class="edit-process" title="Edit" processid='+i+'><i class="glyphicon glyphicon-pencil" style="cursor:pointer"></i></a></td>';
+        out += '<td><a class="delete-process" title="Delete" processid='+i+'><i class="glyphicon glyphicon-trash" style="cursor:pointer"></i></a></td>';
         out += '</tr>';
         
         i++; // process id

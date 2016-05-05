@@ -66,8 +66,8 @@
     // Actions
     'edit-action':{'title':'', 'type':"edit"},
     'delete-action':{'title':'', 'type':"delete"},
-    'view-action':{'title':'', 'type':"iconbasic", 'icon':'icon-wrench'},
-    'test-action':{'title':'', 'type':"iconbasic", 'icon':'icon-eye-open'}
+    'view-action':{'title':'', 'type':"iconbasic", 'icon':'glyphicon-wrench'},
+    'test-action':{'title':'', 'type':"iconbasic", 'icon':'glyphicon-eye-open'}
   }
 
   update();

@@ -16,7 +16,7 @@ http://openenergymonitor.org
     height: auto !important;
     height: 100%;
     /* Negative indent footer by it's height */
-    margin: 0 auto -40px;
+    margin: 51px auto -40px;
 }
 
 #login-form input[type="text"], #login-form input[type="password"] {
@@ -44,9 +44,6 @@ http://openenergymonitor.org
     width:100%;
     background-color:#ddd;
     height:27px;
-}
-#topspacer {
-    padding-top: 42px;
 }
 
 div#account {
@@ -79,10 +76,6 @@ input[type=text][class=variable-name-edit] {
         margin-top:-20px;
         padding-top: 0px;
     }
-}
-
-.menu-text {
-  display: inherit !important;
 }
 
 .menu-description {

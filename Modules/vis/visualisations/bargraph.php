@@ -28,21 +28,21 @@
     <div id="placeholder" style="position:absolute; top:0px;"></div>
     <div id="graph-buttons" style="position:absolute; top:18px; right:32px; opacity:0.5;">
         <div class='btn-group'>
-            <button class='btn graph-time' type='button' time='1'>D</button>
-            <button class='btn graph-time' type='button' time='7'>W</button>
-            <button class='btn graph-time' type='button' time='30'>M</button>
-            <button class='btn graph-time' type='button' time='365'>Y</button>
+            <button class='btn btn-default graph-time' type='button' time='1'>D</button>
+            <button class='btn btn-default graph-time' type='button' time='7'>W</button>
+            <button class='btn btn-default graph-time' type='button' time='30'>M</button>
+            <button class='btn btn-default graph-time' type='button' time='365'>Y</button>
         </div>
         <div class='btn-group'>
-            <button class='btn graph-interval' type='button' interval='d'><span id="textunitD"></span>/D</button>
-            <button class='btn graph-interval' type='button' interval='m'><span id="textunitM"></span>/M</button>
-            <button class='btn graph-interval' type='button' interval='y'><span id="textunitY"></span>/Y</button>
+            <button class='btn btn-default graph-interval' type='button' interval='d'><span id="textunitD"></span>/D</button>
+            <button class='btn btn-default graph-interval' type='button' interval='m'><span id="textunitM"></span>/M</button>
+            <button class='btn btn-default graph-interval' type='button' interval='y'><span id="textunitY"></span>/Y</button>
         </div>
         <div class='btn-group' id='graph-navbar' style='display: none;'>
-            <button class='btn graph-nav' id='zoomin'>+</button>
-            <button class='btn graph-nav' id='zoomout'>-</button>
-            <button class='btn graph-nav' id='left'><</button>
-            <button class='btn graph-nav' id='right'>></button>
+            <button class='btn btn-default graph-nav' id='zoomin'>+</button>
+            <button class='btn btn-default graph-nav' id='zoomout'>-</button>
+            <button class='btn btn-default graph-nav' id='left'><</button>
+            <button class='btn btn-default graph-nav' id='right'>></button>
         </div>
     </div>
     <h3 style="position:absolute; top:0px; left:32px;"><span id="stats"></span></h3>

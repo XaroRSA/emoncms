@@ -394,6 +394,18 @@ class User
         return array('success'=>true, 'message'=>_("Email updated"));
     }
 
+
+    public function change_theme($userid, $theme)
+    {
+        if (isset($_SESSION['cookielogin']) && $_SESSION['cookielogin']==true) return array('success'=>false, 'message'=>_("As your using a cookie based remember me login, please logout and log back in to change theme"));
+
+        $userid = intval($userid);
+        //if (!filter_var($email, FILTER_VALIDATE_EMAIL	)) return array('success'=>false, 'message'=>_("Email address format error"));
+        $this->mysqli->query("UPDATE users SET theme = '$theme' WHERE id = '$userid'");
+		
+        return array('success'=>true, 'message'=>_("Theme updated"));
+    }
+
     //---------------------------------------------------------------------------------------
     // Get by userid methods
     //---------------------------------------------------------------------------------------

@@ -45,16 +45,16 @@ function languagecode_to_name($langs) {
 <script type="text/javascript" src="<?php echo $path; ?>Modules/user/user.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>Lib/listjs/list.js"></script>
 
-<div class="row-fluid">
-    <div class="span4">
+<div class="row">
+    <div class="col-md-4">
         <h3><?php echo _('My account'); ?></h3>
 
         <div id="account">
             <div class="account-item">
                 <span class="muted"><?php echo _('Username'); ?></span>
                 <span id="username-view"><br><span class="username"></span> <a id="edit-username" style="float:right"><?php echo _('Edit'); ?></a></span>
-                <div id="edit-username-form" class="input-append" style="display:none">
-                    <input class="span2" type="text" style="width:150px">
+                <div id="edit-username-form" class="input-group" style="display:none">
+                    <input class="col-md-2" type="text" style="width:150px">
                     <button class="btn" type="button"><?php echo _('Save'); ?></button>
                 </div>
                 <div id="change-username-error" class="alert alert-error" style="display:none; width:170px"></div>
@@ -62,10 +62,12 @@ function languagecode_to_name($langs) {
             <div class="account-item">
                 <span class="muted"><?php echo _('Email'); ?></span>
                 <span id="email-view"><br><span class="email"></span> <a id="edit-email" style="float:right"><?php echo _('Edit'); ?></a></span>
-                <div id="edit-email-form" class="input-append" style="display:none">
-                    <input class="span2" type="text" style="width:150px">
+				
+                <div id="edit-email-form" class="input-group" style="display:none">
+                    <input class="col-md-2" type="text" style="width:150px">
                     <button class="btn" type="button"><?php echo _('Save'); ?></button>
                 </div>
+				
                 <div id="change-email-error" class="alert alert-error" style="display:none; width:170px"></div>
             </div>
 
@@ -73,6 +75,19 @@ function languagecode_to_name($langs) {
                 <a id="changedetails"><?php echo _('Change Password'); ?></a>
             </div>  
 
+			<div class="account-item">
+                <span class="muted"><?php echo _('Theme'); ?></span>
+                <span id="theme-view"><br><span class="theme"></span> <a id="edit-theme" style="float:right"><?php echo _('Edit'); ?></a></span>
+                
+				<div id="edit-theme-form" class="input-group" style="display:none">
+                    <select id="edit-theme-select" class="form-control" style="width:150px">
+					</select>
+                    <button class="btn" type="button"><?php echo _('Save'); ?></button>
+                </div>
+				
+                <div id="change-theme-error" class="alert alert-error" style="display:none; width:170px"></div>
+            </div>
+			
         </div>
 
         <div id="change-password-form" style="display:none">
@@ -108,7 +123,8 @@ function languagecode_to_name($langs) {
         </div>
         
     </div>
-    <div class="span8">
+
+    <div class="col-md-8">
         <h3><?php echo _('My Profile'); ?></h3>
         <div id="table"></div>
     </div>
@@ -119,6 +135,7 @@ function languagecode_to_name($langs) {
     var path = "<?php echo $path; ?>";
     var lang = <?php echo json_encode($languages); ?>;
     var lang_name = <?php echo json_encode($languages_name); ?>;
+    var themes = <?php echo json_encode($themes); ?>;
 
     list.data = user.get();
 
@@ -302,5 +319,60 @@ function languagecode_to_name($langs) {
         $("#changedetails").show();
     });
 
+	//------------------------------------------------------
+    // Theme
+    //------------------------------------------------------
+	$(".theme").html(list.data['theme']);
+	
+	//loads dropdown with themes TODO OPTIMIZE!!
+	$.each(themes, function(val, text) {
+		if (text===list.data['theme']){
+			$('#edit-theme-select').append( $('<option selected></option>').val(val).html(text) )
+		}
+		else{
+			$('#edit-theme-select').append( $('<option></option>').val(val).html(text) )
+		}
+     });	
+	//$("#input-username").val(list.data['usernametheme
+	$("#edit-theme").click(function(){
+        $("#theme-view").hide();
+		
+        $("#edit-theme-form").show();
+    });
+	
+	    $("#edit-theme-form button").click(function(){
+		
+        var selectedtheme = $("#edit-theme-select option:selected").text();
+		if (selectedtheme!=list.data.theme)
+        {
+            $.ajax({
+                url: path+"user/changetheme.json",
+                data: "&theme="+selectedtheme,
+                dataType: 'json',
+                success: function(result)
+                {
+                    if (result.success)
+                    {
+                        $("#theme-view").show();
+                        $("#edit-theme-form").hide();
+                        list.data.theme = selectedtheme;
+                        $(".theme").html(list.data.theme);
+                        $("#change-theme-error").hide();
+						location.reload();
+                    }
+                    else
+                    {
+                        $("#change-theme-error").html(result.message).show();
+                    }
+                }
+            });
+        }
+        else
+        {
+            $("#theme-view").show();
+            $("#edit-theme-form").hide();
+            $("#change-theme-error").hide();
+        }
 
+    });
 </script>
