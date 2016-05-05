@@ -157,6 +157,7 @@
             $session['username'] = $route->controller;
             $session['read'] = 1;
             $session['profile'] = 1;
+	    $session['theme'] = $user->get_theme($userid);
             $route->controller = $public_profile_controller;
             $route->action = $public_profile_action;
             $output = controller($route->controller);

@@ -30,7 +30,8 @@ function user_controller()
     if ($route->format == 'html')
     {
         if ($route->action == 'login' && !$session['read']) $result = view("Modules/user/login_block.php", array('allowusersregister'=>$allowusersregister));
-        if ($route->action == 'view' && $session['write']) $result = view("Modules/user/profile/profile.php", array());
+        if ($route->action == 'view' && $session['write']) {$themes = $user->load_theme_list($path);$result = view("Modules/user/profile/profile.php", array('themes'=>$themes));}
+        if ($route->action == 'register' && !$session['read']) {$result = view("Modules/user/register.php", array());}
         if ($route->action == 'logout' && $session['read']) {$user->logout(); header('Location: '.$path);}
     }
 
@@ -46,6 +47,8 @@ function user_controller()
         if ($route->action == 'changeemail' && $session['write']) $result = $user->change_email($session['userid'],get('email'));
         if ($route->action == 'changepassword' && $session['write']) $result = $user->change_password($session['userid'],get('old'),get('new'));
         
+        if ($route->action == 'changetheme'    && $session['write']) $result = $user->change_theme($session['userid'],get('theme'));
+			
         if ($route->action == 'passwordreset') $result = $user->passwordreset(get('username'),get('email'));
         // Apikey
         if ($route->action == 'newapikeyread' && $session['write']) $result = $user->new_apikey_read($session['userid']);

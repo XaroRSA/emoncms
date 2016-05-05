@@ -70,7 +70,7 @@
         $title = ($desc ? $desc : $name);
         if($name && $published) $name = "<b>".$name."</b>";
 
-        $out = "<div style='display: inline'>";
+
         if ($icon) $out .= "<i class='".$icon."'" . ($title ? " title='".$title."'" : "") . "></i>";
         if ($name) {
             if ($alwaysshowname || !$icon) {
@@ -82,7 +82,7 @@
             $out .= 'unknown';
         }
         if ($desc) $out .= "<span class='menu-description'><small>".$desc."</small></span>";
-        $out .= "</div>";
+
         return $out;
     }
 
@@ -99,7 +99,20 @@
     }
 ?>
 
-<ul class="nav">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Brand</a>
+</div>
+
+
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<ul class="nav navbar-nav">
 <?php
     foreach ($menu['dashboard'] as $item) {
         $item['class'] = 'menu-dashboard';
@@ -111,7 +124,7 @@
     }
 ?>
 </ul>
-<ul class="nav pull-right">
+<ul class="nav navbar-nav navbar-right"">
 <?php
     if (count($menu['dropdown']) && $session['read']) {
         $extra = array();
@@ -126,7 +139,7 @@
     if (count($menu['dropdownconfig'])) {
         $setup = array();
         $setup['name'] = 'Setup';
-        $setup['icon'] = 'icon-wrench icon-white';
+        $setup['icon'] = 'glyphicon glyphicon-wrench icon-white';
         $setup['class'] = 'menu-setup';
         $setup['session'] = 'read';
         $setup['dropdown'] = $menu['dropdownconfig'];
@@ -139,3 +152,4 @@
     }
 ?>
 </ul>
+</div>

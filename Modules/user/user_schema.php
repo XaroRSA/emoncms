@@ -17,7 +17,8 @@ $schema['users'] = array(
     'location'=>array('type'=>'varchar(30)', 'default'=>''),
     'timezone' => array('type'=>'varchar(64)', 'default'=>'UTC'),
     'language' => array('type' => 'varchar(5)', 'default'=>'en_EN'),
-    'bio' => array('type' => 'text', 'default'=>'')
+    'bio' => array('type' => 'text', 'default'=>''),
+    'theme' => array('type' => 'varchar(30)','default'=>'default'),
 );
 
 $schema['rememberme'] = array(

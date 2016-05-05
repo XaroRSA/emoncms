@@ -148,6 +148,7 @@ class User
         if (isset($_SESSION['lang'])) $session['lang'] = $_SESSION['lang']; else $session['lang'] = '';
         if (isset($_SESSION['username'])) $session['username'] = $_SESSION['username']; else $session['username'] = 'REMEMBER_ME';
         if (isset($_SESSION['cookielogin'])) $session['cookielogin'] = $_SESSION['cookielogin']; else $session['cookielogin'] = 0;
+        if (isset($_SESSION['theme'])) $session['theme'] = $this->get_theme($session['userid']); else $session['theme'] = 'default';
 
         return $session;
     }
@@ -206,7 +207,7 @@ class User
         $username = $this->mysqli->real_escape_string($username);
         //$password = $this->mysqli->real_escape_string($password);
 
-        $result = $this->mysqli->query("SELECT id,password,admin,salt,language FROM users WHERE username = '$username'");
+        $result = $this->mysqli->query("SELECT id,password,admin,salt,language,theme FROM users WHERE username = '$username'");
 
         if ($result->num_rows < 1) return array('success'=>false, 'message'=>_("Username does not exist"));
 
@@ -226,6 +227,7 @@ class User
             $_SESSION['write'] = 1;
             $_SESSION['admin'] = $userData->admin;
             $_SESSION['lang'] = $userData->language;
+            $_SESSION['theme'] = $userData->theme;
 
             if ($this->enable_rememberme) {
                 if ($remembermecheck==true) {
@@ -491,6 +493,14 @@ class User
         return $row->salt;
     }
 
+    public function get_theme($userid)
+    {
+        $userid = intval($userid);
+        $result = $this->mysqli->query("SELECT theme FROM users WHERE id = '$userid'");
+        $row = $result->fetch_object();
+        return $row->theme;
+    }
+
     //---------------------------------------------------------------------------------------
     // Get by other paramater methods
     //---------------------------------------------------------------------------------------
@@ -534,7 +544,7 @@ class User
     public function get($userid)
     {
         $userid = intval($userid);
-        $result = $this->mysqli->query("SELECT id,username,email,gravatar,name,location,timezone,language,bio,apikey_write,apikey_read FROM users WHERE id=$userid");
+        $result = $this->mysqli->query("SELECT id,username,email,gravatar,name,location,timezone,language,bio,apikey_write,apikey_read,theme FROM users WHERE id=$userid");
         $data = $result->fetch_object();
         return $data;
     }
@@ -548,7 +558,7 @@ class User
         $location = preg_replace('/[^\p{N}\p{L}_\s-.]/u','',$data->location);
         $timezone = preg_replace('/[^\w-.\\/_]/','',$data->timezone);
         $bio = preg_replace('/[^\p{N}\p{L}_\s-.]/u','',$data->bio);
-        $language = preg_replace('/[^\w\s-.]/','',$data->language); 
+        $language = preg_replace('/[^\w\s-.]/','',$data->language);
         $_SESSION['lang'] = $language;
 
         $result = $this->mysqli->query("UPDATE users SET gravatar = '$gravatar', name = '$name', location = '$location', timezone = '$timezone', language = '$language', bio = '$bio' WHERE id='$userid'");
@@ -578,4 +588,27 @@ class User
         $row = $result->fetch_row();
         return $row[0];
     }
+
+    public function load_theme_list($path){
+        define("THEME_PATH","Lib/bootstrap/css");
+        define("THEME_PATH_EXT",THEME_PATH."/");
+
+        $themes = array();
+        $dir = scandir(THEME_PATH);
+
+        for ($i=2; $i<count($dir); $i++)
+        {
+            if (filetype(THEME_PATH_EXT.$dir[$i])=='dir')
+            {
+                if (is_file(THEME_PATH_EXT.$dir[$i]."/bootstrap.min.css"))
+                {
+                    $themes[] = $dir[$i];
+                }
+            }
+        }
+        return $themes;
+    }
+
+
+
 }
