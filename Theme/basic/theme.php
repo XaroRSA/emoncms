@@ -19,7 +19,6 @@ global $ltime,$path,$fullwidth,$menucollapses,$emoncms_version,$theme,$favicon,$
 
     <?php include 'favicons.php'; ?>
 
-    <link href="<?php echo $path; ?>Lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $path; ?>Lib/bootstrap-datetimepicker-v4/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="<?php echo $path; ?>Theme/<?php echo $theme; ?>/emon.css" rel="stylesheet">
     <script type="text/javascript" src="<?php echo $path; ?>Lib/jquery-1.11.3.min.js"></script>
