@@ -213,6 +213,42 @@ class PHPTimeSeries
         return $array;
     }
     
+    public function firstvalue($feedid){
+        $feedid = (int)$feedid;
+        $this->log->info("firstvalue() $feedid");
+        if (!file_exists($this->dir."feed_$feedid.MYD"))  return false;
+        $array = false;
+        $fh = fopen($this->dir."feed_$feedid.MYD", 'rb');
+        $filesize = filesize($this->dir."feed_$feedid.MYD");
+        if ($filesize >= 9)
+        {
+            fseek($fh,0);
+            $array = unpack("x/Itime/fvalue",fread($fh,9));
+        }
+        fclose($fh);
+        return $array;
+
+    }
+/*
+if ($meta->npoints[0]>0)
+{
+$fh = fopen($this->dir.$meta->id."_0.dat", 'rb');
+$size = $meta->npoints[0]*4;
+fseek($fh,$size-4);
+$d = fread($fh,4);
+fclose($fh);
+
+$val = unpack("f",$d);
+$time = date("Y-n-j H:i:s", $meta->start_time);
+
+return array('time'=>$time, 'value'=>$val[1]);
+}
+else
+{
+    return false;
+}
+
+    */
     /**
      * Return the data for the given timerange
      *
@@ -445,6 +481,64 @@ class PHPTimeSeries
         exit;
     }
 
+    public function csv_dataset($feedid,$start,$end,$outinterval,$timeformat)
+    {
+        global $csv_decimal_places;
+        global $csv_decimal_place_separator;
+        global $csv_field_separator;
+
+        $feedid = (int) $feedid;
+        $outinterval = (int) $outinterval;
+
+        if ($outinterval <1 ) $outinterval = 1;
+        $dp = ceil(($end - $start) / $outinterval);
+        $end = $start + ($dp * $outinterval);
+        if ($dp < 1) return false;
+
+        $fh = fopen($this->dir."feed_$feedid.MYD", 'rb');
+        $filesize = filesize($this->dir."feed_$feedid.MYD");
+
+        $pos = $this->binarysearch($fh,$start,$filesize);
+
+        $interval = ($end - $start) / $dp;
+
+        // Ensure that interval request is less than 1
+        // adjust number of datapoints to request if $interval = 1;
+        if ($interval < 1) {
+            $interval = 1;
+            $dp = ($end - $start) / $interval;
+        }
+
+        $data = array();
+
+        $time = 0;
+
+        for ($i = 0; $i < $dp; $i++)
+        {
+            $pos = $this->binarysearch($fh,$start+($i*$interval),$filesize);
+
+            fseek($fh,$pos);
+
+            // Read the datapoint at this position
+            $d = fread($fh,9);
+
+            // Itime = unsigned integer (I) assign to 'time'
+            // fvalue = float (f) assign to 'value'
+            $array = unpack("x/Itime/fvalue",$d);
+
+            $last_time = $time;
+//            $formatedtime = date($timeformat,$array['time']);
+
+            $time = $array['time'];
+
+            // $last_time = 0 only occur in the first run
+            if (($time != $last_time && $time > $last_time) || $last_time == 0) {
+                $data[] = array(date($timeformat,$array['time']),number_format($array['value'],$csv_decimal_places,$csv_decimal_place_separator,''));
+            }
+        }
+        fclose($fh);
+        return $data;
+    }
 // #### /\ Above are required methods
 
 

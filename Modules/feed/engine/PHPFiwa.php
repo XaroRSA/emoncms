@@ -397,7 +397,36 @@ class PHPFiwa
         
         return $data;
     }
+    /**
+     * Get the first value from a feed
+     *
+     * @param integer $id The id of the feed
+    */
+    public function firstvalue($id)
+    {
+        $id = (int) $id;
 
+        // If meta data file does not exist then exit
+        if (!$meta = $this->get_meta($id)) return false;
+
+        if ($meta->npoints[0]>0)
+        {
+            $fh = fopen($this->dir.$meta->id."_0.dat", 'rb');
+            $size = $meta->npoints[0]*4;
+            fseek($fh,$size-4);
+            $d = fread($fh,4);
+            fclose($fh);
+
+            $val = unpack("f",$d);
+            $time = $meta->start_time;
+            
+            return array('time'=>$time, 'value'=>$val[1]);
+        }
+        else
+        {
+            return array('time'=>0, 'value'=>0);
+        }
+    }
     /**
      * Get the last value from a feed
      *
