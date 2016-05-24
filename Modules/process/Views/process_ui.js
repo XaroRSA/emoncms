@@ -48,7 +48,7 @@ var processlist_ui =
         if (this.processlist[processkey] != undefined) {
           var procneedredis = (this.has_redis == 0 && this.processlist[processkey]['requireredis'] != undefined && this.processlist[processkey]['requireredis'] == true ? 1 : 0);
           if (procneedredis) {
-            arg += "<span class='label label-important' title='Value'>Process ´"+processkey+"´ not available. Redis not installed.</span>";
+            arg += "<span class='label label-important' title='Value'>Process �"+processkey+"� not available. Redis not installed.</span>";
           } else {
             // Check ProcessArg Type
             switch(this.processlist[processkey][1]) {
@@ -111,7 +111,7 @@ var processlist_ui =
         }
         else {
           processname = "UNSUPPORTED";
-          arg += "<span class='label label-important' title='Value'>Process ´"+processkey+"´ not available. Module missing?</span>";
+          arg += "<span class='label label-important' title='Value'>Process �"+processkey+"� not available. Module missing?</span>";
         }
         out += "<td>"+(i+1)+"</td><td>"+processname+"</td><td>"+arg+"</td><td>"+lastvalue+"</td>";
      
@@ -143,7 +143,7 @@ var processlist_ui =
           if (this.processlist[processkey] != undefined) {
             var procneedredis = (this.has_redis == 0 && this.processlist[processkey]['requireredis'] !== undefined && this.processlist[processkey]['requireredis'] == true ? 1 : 0);
             if (procneedredis) {
-                out += "<span class='badge badge-important' title='Process ´"+processkey+"´ not available. Redis not installed.'>NO REDIS</span> "
+                out += "<span class='badge badge-important' title='Process �"+processkey+"� not available. Redis not installed.'>NO REDIS</span> "
             } else {
               // Check ProcessArg Type
               value = localprocesslist[z][1];
@@ -200,11 +200,11 @@ var processlist_ui =
               }
             }
           } else {
-              out += "<span class='badge badge-important' title='Process ´"+processkey+"´ not available. Module missing?'>UNSUPPORTED</span> "
+              out += "<span class='badge badge-important' title='Process �"+processkey+"� not available. Module missing?'>UNSUPPORTED</span> "
           }
         }
       } else {
-        return "<div class='muted'>wait…</div>"
+        return "<div class='muted'>wait�</div>"
       }
       return out;
     }
@@ -226,7 +226,7 @@ var processlist_ui =
           if (this.processlist[processkey] != undefined) {
             var procneedredis = (this.has_redis == 0 && this.processlist[processkey]['requireredis'] !== undefined && this.processlist[processkey]['requireredis'] == true ? 1 : 0);
             if (procneedredis) {
-                out += "<span class='badge badge-important' title='Process ´"+processkey+"´ not available. Redis not installed.'>NO REDIS</span> "
+                out += "<span class='badge badge-important' title='Process �"+processkey+"� not available. Redis not installed.'>NO REDIS</span> "
             } else {
               // Check ProcessArg Type
               value = localprocesslist[z][1];
@@ -252,7 +252,7 @@ var processlist_ui =
               }
             }
           } else {
-              out += "<span class='badge badge-important' title='Process ´"+processkey+"´ not available. Module missing?'>UNSUPPORTED</span> "
+              out += "<span class='badge badge-important' title='Process �"+processkey+"� not available. Module missing?'>UNSUPPORTED</span> "
           }
 		  if (out != "") return out; // return first error
         }
@@ -262,7 +262,7 @@ var processlist_ui =
   },
   
   'events':function(){
-    $("#processlist-ui #feed-engine").change(function(){
+    $("#processlist-ui #feed-engine").on('change', function(){
       var engine = $(this).val();
       $("#feed-interval").hide();
       if (engine==6 || engine==5 || engine==4 || engine==1) $("#feed-interval").show();
@@ -283,7 +283,8 @@ var processlist_ui =
       } 
     });
 
-    $('#processlist-ui #process-add, #processlist-ui #process-edit').click(function(){
+    $('#processlist-ui #process-add, #processlist-ui #process-edit').on('click', function(e){
+      e.preventDefault();
       var processid = $('#process-select').val();
       var process = processlist_ui.processlist[processid];
       var arg = '';
@@ -362,7 +363,7 @@ var processlist_ui =
       processlist_ui.modified();
     });
 
-    $('#processlist-ui #process-select').change(function(){
+    $('#processlist-ui #process-select').on('change',function(){
       var processid = $(this).val();
       
       $("#description").html("");
@@ -399,7 +400,7 @@ var processlist_ui =
       
     });
 
-    $('#processlist-ui #feed-select').change(function(){
+    $('#processlist-ui #feed-select').on('change',function(){
       var feedid = $("#feed-select").val();
 
       if (feedid == -1) {
@@ -418,14 +419,14 @@ var processlist_ui =
       }
     });
 
-    $('#processlist-ui .table').on('click', '.delete-process', function(){
+    $('#processlist-ui .table')
+        .on('click', '.delete-process', function(){
       processlist_ui.contextprocesslist.splice($(this).attr('processid'),1);
       var processid = $(this).attr('processid')*1;
       processlist_ui.draw();
       processlist_ui.modified();
-    });
-
-    $('#processlist-ui .table').on('click', '.move-process', function(){
+    })
+        .on('click', '.move-process', function(){
       var processid = $(this).attr('processid')*1;
       var curpos = parseInt(processid);
       var moveby = parseInt($(this).attr('moveby'));
@@ -435,9 +436,8 @@ var processlist_ui =
         processlist_ui.draw();
         processlist_ui.modified();
       }
-    });
-
-    $('#processlist-ui .table').on('click', '.edit-process', function(){
+    })
+        .on('click', '.edit-process', function(){
       var process = processlist_ui.contextprocesslist[$(this).attr('processid')];
       var processid = process[0];
       var processval = process[1];
@@ -482,7 +482,7 @@ var processlist_ui =
       processlist_ui.scrollto($('#process-header-edit'));
     });
 
-    $('#processlist-ui #process-cancel').click(function(){
+    $('#processlist-ui #process-cancel').on('click',function(){
       $("#process-header-add").show();
       $("#process-header-edit").hide();
       $("#type-btn-add").show();
@@ -497,6 +497,9 @@ var processlist_ui =
   },
   
   'showfeedoptions':function(processid){
+    
+    //REMOVE
+    console.log(this.processlist[processid]);
     var prc = this.processlist[processid][2];     // process function
     var feedwrite = this.processlist[processid]['feedwrite']; // process writes to feed
     var engines = this.processlist[processid][6];   // 0:MYSQL, 5:PHPFINA, 6:PHPFIWA

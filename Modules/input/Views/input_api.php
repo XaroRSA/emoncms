@@ -7,10 +7,10 @@
 <li><?php echo _('Use POST parameter: "apikey=APIKEY"'); ?></li>
 <li><?php echo _('Add the HTTP header: "Authorization: Bearer APIKEY"'); ?></li></ul>
 <p><b><?php echo _('Read only:'); ?></b><br>
-<input type="text" style="width:255px" readonly="readonly" value="<?php echo $user->get_apikey_read($session['userid']); ?>" />
+<input type="text" class="form-control" style="width:255px" readonly="readonly" value="<?php echo $user->get_apikey_read($session['userid']); ?>" />
 </p>
 <p><b><?php echo _('Read & Write:'); ?></b><br>
-<input type="text" style="width:255px" readonly="readonly" value="<?php echo $user->get_apikey_write($session['userid']); ?>" />
+<input type="text" class="form-control" style="width:255px" readonly="readonly" value="<?php echo $user->get_apikey_write($session['userid']); ?>" />
 </p>
 
 <h3><?php echo _('Available HTML URLs'); ?></h3>
